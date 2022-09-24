@@ -18,8 +18,4 @@ from django.urls import include, path
 
 from mainapp.views import *
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('mainapp/', include('mainapp.urls'))
-
-]
+urlpatterns = [path("admin/", admin.site.urls), path("mainapp/", include("mainapp.urls"))]
