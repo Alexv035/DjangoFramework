@@ -1,2 +1,2 @@
 # DjangoFramework
-Django Framework
+It's educational platform 
