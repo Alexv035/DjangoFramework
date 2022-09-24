@@ -1,0 +1,7 @@
+https://www.yandex.ru/search/?text=мир+кэшбэк&lr=213&src=suggest_B
+https://www.avito.ru/moskva/bytovaya_tehnika/dlya_doma/stiralnye_mashiny-ASgBAgICAkRgpE_OB6ZP?cd=1&q=стиральная+машина+бу
+https://www.mvideo.ru/product-list-page?q=phone&id=admin
+
+под * не делал
+1. pyenv - не оптимизирована работа под мой ubuntu. Если необходимо VSC позволяет работать под разными версиями python
+2. samba - мне не нужен т.к. на комп нет windows
