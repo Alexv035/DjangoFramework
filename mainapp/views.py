@@ -1,6 +1,7 @@
-from datetime import datetime
-from django.views.generic import TemplateView
 import json
+from datetime import datetime
+
+from django.views.generic import TemplateView
 
 # Create your views here.
 
@@ -20,10 +21,10 @@ class NewsPageView(TemplateView):
         # context['news_date'] = datetime.now()
         # context['range'] = len(data['news'])
 
-        context['news_title'] = 'Новость'
-        context['description'] = 'Предварительное описание новости'
-        context['news_date'] = datetime.now()
-        context['range'] = range(5)
+        context["news_title"] = "Новость"
+        context["description"] = "Предварительное описание новости"
+        context["news_date"] = datetime.now()
+        context["range"] = range(5)
 
         return context
 
