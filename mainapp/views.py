@@ -2,6 +2,10 @@ import json
 from datetime import datetime
 
 from django.views.generic import TemplateView
+from .models import News
+
+from mainapp import models as mainapp_models
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -11,21 +15,12 @@ class MainPageView(TemplateView):
 
 
 class NewsPageView(TemplateView):
+
     template_name = "mainapp/news.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # with open("news.json") as f:
-        #     data = json.load(f)
-        # context['news'] = data['news']
-        # context['news_date'] = datetime.now()
-        # context['range'] = len(data['news'])
-
-        context["news_title"] = "Новость"
-        context["description"] = "Предварительное описание новости"
-        context["news_date"] = datetime.now()
-        context["range"] = range(5)
-
+    def get_context_data(self, pk=None, **kwargs):
+        context = super().get_context_data(pk=pk, **kwargs)
+        context["news_object"] = get_object_or_404(mainapp_models.News, pk=pk)
         return context
 
 
