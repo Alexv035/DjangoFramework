@@ -13,4 +13,8 @@ urlpatterns = [
     path("contacts/", ContactPageView.as_view(), name="contacts"),
     path("news/", NewsPageView.as_view(), name="news"),
     path("courses_list/", CoursesPageView.as_view(), name="courses"),
+
+    path("news/<int:pk>/", NewsPageDetailView.as_view(), name="news_detail"),
+    path("courses/<int:pk>/", CoursesDetailView.as_view(), name="courses_detail",),
+
 ]
