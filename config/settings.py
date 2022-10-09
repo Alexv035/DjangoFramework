@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # "markdownify.apps.MarkdownifyConfig",
     "social_django",
     "mainapp",
-    "authapp"
+    "authapp",
 ]
 
 MIDDLEWARE = [
@@ -67,7 +67,9 @@ TEMPLATES = [
                 "django.template.context_processors.media",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "mainapp.context_processors.example.simple_context_processor",
+                # "mainapp.context_processors.example.simple_context_processor",
+                # "django.context_processors.example.simple_context_processor",
+                "django.template.context_processors.request",
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
             ],
