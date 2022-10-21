@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
-
 from authapp import models
+
+# Register your models here.
 
 
 @admin.register(models.CustomUser)
