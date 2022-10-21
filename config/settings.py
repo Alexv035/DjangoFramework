@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "markdownify.apps.MarkdownifyConfig",
+    "markdownify.apps.MarkdownifyConfig",
     "social_django",
     "mainapp",
-    "authapp"
+    "authapp",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ TEMPLATES = [
                 "django.template.context_processors.media",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "mainapp.context_processors.example.simple_context_processor",
+                # "mainapp.example.simple_context_processor",
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
             ],
@@ -76,6 +77,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 # Database

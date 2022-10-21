@@ -2,11 +2,20 @@ from django.shortcuts import render
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from authapp import models
 from django.contrib import messages
 
-from django.utils import mark_safe
+from django.utils.safestring import mark_safe
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth.views import LogoutView
+
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic import UpdateView
+
+from django.contrib.auth import get_user_model
+
+from authapp import forms
 
 
 class CustomLoginView(LoginView):
@@ -23,6 +32,12 @@ class CustomLoginView(LoginView):
         }
         messages.add_message(self.request, messages.INFO, mark_safe(message))
         return ret
+
+
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        messages.add_message(self.request, messages.INFO, _("See you later!"))
+        return super().dispatch(request, *args, **kwargs)
 
     def form_invalid(self, form):
         for _unused, msg in form.error_messages.items():
@@ -104,3 +119,20 @@ class ProfileEditView(LoginRequiredMixin, TemplateView):
                 mark_safe(f"Something goes worng:<br>{exp}"),
             )
         return HttpResponseRedirect(reverse_lazy("authapp:profile_edit"))
+
+
+class RegisterView(CreateView):
+    model = get_user_model()
+    form_class = forms.CustomUserCreationForm
+    success_url = reverse_lazy("mainapp:main_page")
+
+
+class ProfileEditView(UserPassesTestMixin, UpdateView):
+    model = get_user_model()
+    form_class = forms.CustomUserChangeForm
+
+    def test_func(self):
+        return True if self.request.user.pk == self.kwargs.get("pk") else False
+
+    def get_success_url(self):
+        return reverse_lazy("authapp:profile_edit", args=[self.request.user.pk])
