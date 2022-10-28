@@ -43,3 +43,8 @@
         </div>
     </div>
 </nav>
+
+{% if user.is_superuser %}
+<a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Административный
+    раздел</a>
+{% endif %}
