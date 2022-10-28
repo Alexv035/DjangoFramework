@@ -32,6 +32,10 @@ urlpatterns = [
     ),
 
     path("courses_list/", CoursesPageView.as_view(), name="courses"),
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
     path(
         "courses/<int:pk>/",
         CoursesDetailView.as_view(),
@@ -43,7 +47,10 @@ urlpatterns = [
         name="course_feedback",
     ),
 
+<<<<<<< HEAD
     path("log_view/", views.LogView.as_view(), name="log_view"),
     path("log_download/", views.LogDownloadView.as_view(), name="log_download"),
 
+=======
+>>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
 ]

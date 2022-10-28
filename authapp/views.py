@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render
 
 from django.contrib.auth.views import LoginView
@@ -6,6 +7,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 from authapp import models
 
+=======
+>>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -15,7 +18,12 @@ from django.urls import reverse, reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views.generic import CreateView, TemplateView, UpdateView
 
+<<<<<<< HEAD
 from django.utils import mark_safe
+=======
+from authapp import forms, models
+
+>>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
 
 
 class CustomLoginView(LoginView):

@@ -112,6 +112,7 @@ class CoursesDetailView(TemplateView):
     def get_context_data(self, pk=None, **kwargs):
         logger.debug("Yet another log message")
         context = super(CoursesDetailView, self).get_context_data(**kwargs)
+<<<<<<< HEAD
         context["course_object"] = get_object_or_404(
             mainapp_models.Courses, pk=pk
         )
@@ -121,6 +122,12 @@ class CoursesDetailView(TemplateView):
         context["teachers"] = mainapp_models.CourseTeachers.objects.filter(
             course=context["course_object"]
         )
+=======
+        context["course_object"] = get_object_or_404(mainapp_models.Courses, pk=pk)
+        context["lessons"] = mainapp_models.Lesson.objects.filter(course=context["course_object"])
+        context["teachers"] = mainapp_models.CourseTeachers.objects.filter(course=context["course_object"])
+
+>>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
         if not self.request.user.is_anonymous:
             if not mainapp_models.CourseFeedback.objects.filter(
                 course=context["course_object"], user=self.request.user
@@ -131,6 +138,10 @@ class CoursesDetailView(TemplateView):
         context["feedback_list"] = mainapp_models.CourseFeedback.objects.filter(
             course=context["course_object"]
         ).order_by("-created", "-rating")[:5]
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
         return context
 
 
