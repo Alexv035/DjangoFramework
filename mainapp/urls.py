@@ -1,13 +1,12 @@
-from django.urls import include, path
-from django.conf.urls.static import static
 import debug_toolbar
+from django.conf.urls.static import static
+from django.urls import include, path
+from django.views.decorators.cache import cache_page
 
 from mainapp import views
 from mainapp.apps import MainappConfig
 
 from .views import *
-
-from django.views.decorators.cache import cache_page
 
 app_name = MainappConfig.name
 
@@ -16,7 +15,6 @@ urlpatterns = [
     path("login/", LoginPageView.as_view(), name="login"),
     path("doc_site/", DocSitePageView.as_view(), name="docs"),
     path("contacts/", ContactPageView.as_view(), name="contacts"),
-
     path("news/", NewsPageView.as_view(), name="news"),
     path("news/create/", views.NewsCreateView.as_view(), name="news_create"),
     path(
@@ -34,12 +32,7 @@ urlpatterns = [
         views.NewsDeleteView.as_view(),
         name="news_delete",
     ),
-
-    path("courses_list/", cache_page(60 * 5)
-         (views.CoursesListView.as_view()),
-         name="courses"
-         ),
-
+    path("courses_list/", cache_page(60 * 5)(views.CoursesListView.as_view()), name="courses"),
     path(
         "courses/<int:pk>/",
         CoursesDetailView.as_view(),
@@ -50,13 +43,10 @@ urlpatterns = [
         views.CourseFeedbackFormProcessView.as_view(),
         name="course_feedback",
     ),
-
     path("log_view/", views.LogView.as_view(), name="log_view"),
     path("log_download/", views.LogDownloadView.as_view(), name="log_download"),
-
 ]
 
 if settings.DEBUG:
     urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
