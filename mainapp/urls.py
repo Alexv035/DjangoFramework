@@ -1,9 +1,13 @@
-from django.urls import path
+from django.urls import include, path
+from django.conf.urls.static import static
+import debug_toolbar
 
 from mainapp import views
 from mainapp.apps import MainappConfig
 
 from .views import *
+
+from django.views.decorators.cache import cache_page
 
 app_name = MainappConfig.name
 
@@ -31,11 +35,11 @@ urlpatterns = [
         name="news_delete",
     ),
 
-    path("courses_list/", CoursesPageView.as_view(), name="courses"),
-<<<<<<< HEAD
-=======
+    path("courses_list/", cache_page(60 * 5)
+         (views.CoursesListView.as_view()),
+         name="courses"
+         ),
 
->>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
     path(
         "courses/<int:pk>/",
         CoursesDetailView.as_view(),
@@ -47,10 +51,12 @@ urlpatterns = [
         name="course_feedback",
     ),
 
-<<<<<<< HEAD
     path("log_view/", views.LogView.as_view(), name="log_view"),
     path("log_download/", views.LogDownloadView.as_view(), name="log_download"),
 
-=======
->>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
 ]
+
+if settings.DEBUG:
+    urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

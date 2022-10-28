@@ -29,6 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+if DEBUG:
+    INTERNAL_IPS = [
+        "127.0.0.1"
+    ]
+
 
 # Application definition
 
@@ -44,10 +49,7 @@ INSTALLED_APPS = [
     "mainapp",
     "authapp",
     "crispy_forms",
-<<<<<<< HEAD
-=======
-
->>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -75,11 +78,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 # "mainapp.example.simple_context_processor",
-<<<<<<< HEAD
-=======
                 # "django.context_processors.example.simple_context_processor",
                 "django.template.context_processors.request",
->>>>>>> 9dae1b180e2d67282f7d241dcc2914e60af15712
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
             ],
@@ -181,3 +181,20 @@ LOGGING = {
         "django": {"level": "INFO", "handlers": ["file", "console"]},
     },
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = "var/email-messages/"
