@@ -32,8 +32,7 @@ urlpatterns = [
         views.NewsDeleteView.as_view(),
         name="news_delete",
     ),
-    path("courses_list/", cache_page(60 * 5)
-         (views.CoursesPageView.as_view()), name="courses"),
+    path("courses_list/", cache_page(60 * 5)(views.CoursesPageView.as_view()), name="courses"),
     path(
         "courses/<int:pk>/",
         CoursesDetailView.as_view(),
@@ -50,5 +49,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

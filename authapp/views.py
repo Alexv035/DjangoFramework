@@ -1,26 +1,15 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils.safestring import mark_safe
+from django.views.generic import CreateView, TemplateView, UpdateView
 
-
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin,
-    UserPassesTestMixin,
-)
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.template.loader import render_to_string
-from django.views.generic import (
-    CreateView,
-    TemplateView,
-    UpdateView,
-)
-from authapp import forms
-from authapp import models
+from authapp import forms, models
 
 
 class CustomLoginView(LoginView):
@@ -70,25 +59,20 @@ class RegisterView(TemplateView):
                     request.POST.get("username"),
                     request.POST.get("email"),
                     request.POST.get("password1"),
-                    request.POST.get("password1")
-                    == request.POST.get("password2"),
+                    request.POST.get("password1") == request.POST.get("password2"),
                 )
             ):
                 new_user = models.CustomUser.objects.create(
                     username=request.POST.get("username"),
                     first_name=request.POST.get("first_name"),
                     last_name=request.POST.get("last_name"),
-                    age=request.POST.get("age")
-                    if request.POST.get("age")
-                    else 0,
+                    age=request.POST.get("age") if request.POST.get("age") else 0,
                     avatar=request.FILES.get("avatar"),
                     email=request.POST.get("email"),
                 )
                 new_user.set_password(request.POST.get("password1"))
                 new_user.save()
-                messages.add_message(
-                    request, messages.INFO, _("Registration success!")
-                )
+                messages.add_message(request, messages.INFO, _("Registration success!"))
                 return HttpResponseRedirect(reverse_lazy("authapp:login"))
         except Exception as exp:
             messages.add_message(
@@ -116,9 +100,7 @@ class ProfileEditView(LoginRequiredMixin, TemplateView):
             if request.POST.get("email"):
                 request.user.email = request.POST.get("email")
             if request.FILES.get("avatar"):
-                if request.user.avatar and os.path.exists(
-                    request.user.avatar.path
-                ):
+                if request.user.avatar and os.path.exists(request.user.avatar.path):
                     os.remove(request.user.avatar.path)
                 request.user.avatar = request.FILES.get("avatar")
             request.user.save()

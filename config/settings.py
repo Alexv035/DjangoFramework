@@ -20,7 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-sz888&$r-t&9+=1r((mzdz(d@8=@&ju+9qb7gifv#6r+2wolkc"
+SECRET_KEY = (
+    "django-insecure-sz888&$r-t&9+=1r((mzdz(d@8=@&ju+9qb7gifv#6r+2wolkc"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -56,8 +59,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+if DEBUG is False:
+    del MIDDLEWARE[0]
 
 ROOT_URLCONF = "config.urls"
 
@@ -160,7 +165,9 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "console": {"format": "[ % (asctime)s] % (levelname)s % (name)s (%(lineno)d) % (message)s"},
+        "console": {
+            "format": "[ % (asctime)s] % (levelname)s % (name)s (%(lineno)d) % (message)s"
+        },
     },
     "handlers": {
         "file": {
