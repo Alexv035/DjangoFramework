@@ -29,7 +29,9 @@ urlpatterns = [
         views.NewsDeleteView.as_view(),
         name="news_delete",
     ),
+
     path("courses_list/", CoursesPageView.as_view(), name="courses"),
+
     path(
         "courses/<int:pk>/",
         CoursesDetailView.as_view(),
@@ -40,4 +42,5 @@ urlpatterns = [
         views.CourseFeedbackFormProcessView.as_view(),
         name="course_feedback",
     ),
+
 ]
