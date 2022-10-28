@@ -43,10 +43,7 @@ INSTALLED_APPS = [
     "social_django",
     "mainapp",
     "authapp",
-<<<<<<< HEAD
-=======
     "crispy_forms",
->>>>>>> 31a30a1f0ab649740261b33dfd02bd32d5f0a275
 ]
 
 MIDDLEWARE = [
@@ -73,13 +70,7 @@ TEMPLATES = [
                 "django.template.context_processors.media",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-<<<<<<< HEAD
-                # "mainapp.context_processors.example.simple_context_processor",
-                # "django.context_processors.example.simple_context_processor",
-                "django.template.context_processors.request",
-=======
                 # "mainapp.example.simple_context_processor",
->>>>>>> 31a30a1f0ab649740261b33dfd02bd32d5f0a275
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
             ],
@@ -158,3 +149,26 @@ AUTHENTICATION_BACKENDS = (
     "social_core.backends.github.GithubOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 )
+
+LOG_FILE = BASE_DIR / "var" / "log" / "main_log.log"
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "[ % (asctime)s] % (levelname)s % (name)s (%(lineno)d) % (message)s"
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": LOG_FILE,
+            "formatter": "console",
+        },
+        "console": {"class": "logging.StreamHandler", "formatter": "console"},
+    },
+    "loggers": {
+        "django": {"level": "INFO", "handlers": ["file", "console"]},
+    },
+}
