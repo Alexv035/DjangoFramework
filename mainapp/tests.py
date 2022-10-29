@@ -1,13 +1,14 @@
-from http import HTTPStatus
 import pickle
-from django.urls import reverse
-from django.core import mail as django_mail
+from http import HTTPStatus
 from unittest import mock
 
-from mainapp import models as mainapp_models
-from authapp import models as authapp_models
-from mainapp import tasks as mainapp_tasks
+from django.core import mail as django_mail
 from django.test import Client, TestCase
+from django.urls import reverse
+
+from authapp import models as authapp_models
+from mainapp import models as mainapp_models
+from mainapp import tasks as mainapp_tasks
 
 
 class TestMainPage(TestCase):
@@ -27,9 +28,7 @@ class TestNewsPage(TestCase):
         super().setUp()
         self.client_with_auth = Client()
         path_auth = reverse("authapp:login")
-        self.client_with_auth.post(
-            path_auth, data={"username": "admin", "password": "admin"}
-        )
+        self.client_with_auth.post(path_auth, data={"username": "admin", "password": "admin"})
 
     def test_page_open_list(self):
         path = reverse("mainapp:news")
@@ -119,9 +118,9 @@ class TestCoursesWithMock(TestCase):
     def test_page_open_detail(self):
         course_obj = mainapp_models.Courses.objects.get(pk=2)
         path = reverse("mainapp:courses_detail", args=[course_obj.pk])
-        with open(
-            "mainapp/fixtures/006_feedback_list_2.bin", "rb"
-        ) as inpf, mock.patch("django.core.cache.cache.get") as mocked_cache:
+        with open("mainapp/fixtures/006_feedback_list_2.bin", "rb") as inpf, mock.patch(
+            "django.core.cache.cache.get"
+        ) as mocked_cache:
             mocked_cache.return_value = pickle.load(inpf)
             result = self.client.get(path)
             self.assertEqual(result.status_code, HTTPStatus.OK)
@@ -134,7 +133,5 @@ class TestTaskMailSend(TestCase):
     def test_mail_send(self):
         message_text = "test_message_text"
         user_obj = authapp_models.CustomUser.objects.first()
-        mainapp_tasks.send_feedback_mail(
-            {"user_id": user_obj.id, "message": message_text}
-        )
+        mainapp_tasks.send_feedback_mail({"user_id": user_obj.id, "message": message_text})
         self.assertEqual(django_mail.outbox[0].body, message_text)

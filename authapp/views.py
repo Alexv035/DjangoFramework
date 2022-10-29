@@ -10,7 +10,6 @@ from django.views.generic import CreateView, TemplateView, UpdateView
 from authapp import forms, models
 
 
-
 class CustomLoginView(LoginView):
     def dispatch(self, request, *args, **kwargs):
         messages.add_message(self.request, messages.INFO, _("See you later!"))
